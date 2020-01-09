@@ -1,10 +1,21 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+require('./models/User');
+
+// Instantiate Express App
 const app = express();
 
-// Test route
-app.get('/api/v1', (req,res) => {
-    res.send({hello:"world"});
-});
+// Connect to MongoDB
+mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('userCreateIndex', true); // Fix mongoose deprecation issue
+
+// Init Middleware
+app.use(express.json({extended: false}));
+
+// Bind Routes to App
+require('./routes/userRoutes')(app);
+require('./routes/authRoutes')(app);
 
 // Making sure routing works in prod
 if (process.env.NODE_ENV === 'production') {

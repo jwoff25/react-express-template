@@ -9,12 +9,20 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true
+    },
+    avatar: {
+        type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
-mongoose.model('users', userSchema);
+module.exports = User = mongoose.model('user', userSchema);
