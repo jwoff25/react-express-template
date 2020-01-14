@@ -7,6 +7,7 @@ const keys = require('../config/keys');
 const User = require('../models/User');
 
 module.exports = app => {
+    // Create a New User
     app.post(
         '/api/users', 
         [

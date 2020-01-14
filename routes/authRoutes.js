@@ -7,6 +7,7 @@ const keys = require('../config/keys');
 const User = require('../models/User');
 
 module.exports = app => {
+    // Find and return User Object
     app.get('/api/auth', auth, async (req,res) => {
         try {
             // Find user by id 
@@ -20,7 +21,7 @@ module.exports = app => {
         }
     });
 
-    // Login
+    // Login User
     app.post(
         '/api/auth', 
         [
