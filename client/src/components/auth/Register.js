@@ -1,11 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // Redux actions
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 
-const Register = (props) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
     // Use formdata state
     const [formData, setFormData] = useState({
         name: '',
@@ -24,10 +25,10 @@ const Register = (props) => {
 
         // Check if passwords match
         if (password !== password2) {
-            props.setAlert('Passwords do not match.', 'danger', 3000);
+            setAlert('Passwords do not match.', 'danger', 3000);
         }
         else {
-            console.log('Success');
+            register({ name, email, password });
             // What we're going to do in redux -- left it here for reference
             // const newUser = {
             //     name,
@@ -52,6 +53,11 @@ const Register = (props) => {
         }
     }
 
+    // Redirect if Logged in
+    if (isAuthenticated) {
+        return <Redirect to="/dashboard" />
+    }
+
     return (
         <Fragment>
             <h1 className="large text-primary">Sign Up</h1>
@@ -64,7 +70,7 @@ const Register = (props) => {
                     name="name" 
                     value={name}
                     onChange={e => onChange(e)}
-                    required 
+                     
                 />
                 </div>
                 <div className="form-group">
@@ -74,7 +80,7 @@ const Register = (props) => {
                     name="email" 
                     value={email}
                     onChange={e => onChange(e)}
-                    required
+                    
                 />
                 <small className="form-text"
                     >This site uses Gravatar so if you want a profile image, use a
@@ -88,7 +94,7 @@ const Register = (props) => {
                     name="password"
                     value={password}
                     onChange={e => onChange(e)}
-                    minLength="6"
+                    
                 />
                 </div>
                 <div className="form-group">
@@ -98,7 +104,7 @@ const Register = (props) => {
                     name="password2"
                     value={password2}
                     onChange={e => onChange(e)}
-                    minLength="6"
+                    
                 />
                 </div>
                 <input type="submit" className="btn btn-primary" value="Register" />
@@ -111,7 +117,13 @@ const Register = (props) => {
 }
 
 Register.propTypes = {
-    setAlert: PropTypes.func.isRequired
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
 }
 
-export default connect(null, { setAlert })(Register);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
