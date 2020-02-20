@@ -16,6 +16,7 @@ app.use(express.json({extended: false}));
 // Bind Routes to App
 require('./routes/userRoutes')(app);
 require('./routes/authRoutes')(app);
+require('./routes/profileRoutes')(app);
 
 // Making sure routing works in prod
 if (process.env.NODE_ENV === 'production') {
