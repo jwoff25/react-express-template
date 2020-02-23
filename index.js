@@ -8,7 +8,7 @@ const app = express();
 
 // Connect to MongoDB
 mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.set('userCreateIndex', true); // Fix mongoose deprecation issue
+mongoose.set('useCreateIndex', true); // Fix mongoose deprecation issue
 
 // Init Middleware
 app.use(express.json({extended: false}));
