@@ -119,14 +119,14 @@ module.exports = app => {
         "avatar"
       ]);
       // If user doesn't exist, return 400
-      if (!profile) return res.status(400).json({ msg: "Profile not found." });
+      if (!profile) return res.status(404).json({ msg: "Profile not found." });
       // Return the user
       res.json(profile);
     } catch (error) {
       console.error(error.message);
       // If error is an incorrect ID, send profile not found message
       if (error.kind == "ObjectId")
-        return res.status(400).json({ msg: "Profile not found." });
+        return res.status(404).json({ msg: "Profile not found." });
       res.status(500).send("Server error.");
     }
   });
