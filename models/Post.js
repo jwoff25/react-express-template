@@ -30,7 +30,7 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "users"
       },
-      comment: {
+      text: {
         type: String,
         required: true
       },
