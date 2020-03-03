@@ -1,13 +1,13 @@
-const jwt = require('jsonwebtoken');
-const keys = require('../config/keys');
+const jwt = require("jsonwebtoken");
+const keys = require("../config/keys");
 
 module.exports = (req, res, next) => {
     // Get tokeb from header
-    const token = req.header('x-auth-token'); // Will be sending token in x-auth-token header
+    const token = req.header("x-auth-token"); // Will be sending token in x-auth-token header
 
     // Check if token doesnt exist
-    if(!token) {
-        return res.status(401).json({ msg: 'Access denied.' });
+    if (!token) {
+        return res.status(401).json({ msg: "Access denied." });
     }
 
     // Verify token
@@ -16,8 +16,7 @@ module.exports = (req, res, next) => {
 
         req.user = decoded.user;
         next();
-    } 
-    catch(err) {
-        res.status(401).json({ msg: 'Invalid token.' });
+    } catch (err) {
+        res.status(401).json({ msg: "Invalid token." });
     }
-}
+};
