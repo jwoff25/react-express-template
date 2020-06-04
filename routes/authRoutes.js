@@ -101,7 +101,7 @@ module.exports = (app) => {
           return res.status(404).json({ error: "User not found." });
         }
         // Compare passwords
-        const passMatch = bcrypt.compare(password, user.password);
+        const passMatch = await bcrypt.compare(password, user.password);
         if (!passMatch) {
           return res.status(400).json({ error: "Incorrect password." });
         }
