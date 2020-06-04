@@ -8,7 +8,12 @@ module.exports = (app) => {
     "/api/user",
     passport.authenticate("jwt", { session: false }),
     async (req, res) => {
-      res.status(200).json({ user: req.user });
+      const { _id, username, email, date } = req.user;
+      res
+        .status(200)
+        .json({
+          user: { id: _id, username: username, email: email, date: date },
+        });
     }
   );
 
